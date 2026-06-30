@@ -13,3 +13,7 @@ output "vnet_name" {
 output "subnet_id" {
   value = module.virtual_network.subnet_id
 }
+
+output "nsg_name" {
+  value = module.network_security_group.nsg_name
+}

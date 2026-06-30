@@ -23,3 +23,12 @@ module "virtual_network" {
   subnet_name     = "default"
   subnet_prefixes = ["10.0.1.0/24"]
 }
+
+module "network_security_group" {
+  source = "../modules/network-security-group"
+
+  nsg_name            = "lab-nsg"
+  location            = "Central India"
+  resource_group_name = module.resource_group.resource_group_name
+  subnet_id           = module.virtual_network.subnet_id
+}
