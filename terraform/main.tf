@@ -11,3 +11,15 @@ module "storage_account" {
   resource_group_name  = module.resource_group.resource_group_name
   location             = "Central India"
 }
+
+module "virtual_network" {
+  source = "../modules/virtual-network"
+
+  vnet_name           = "lab-vnet"
+  location            = "Central India"
+  resource_group_name = module.resource_group.resource_group_name
+
+  address_space   = ["10.0.0.0/16"]
+  subnet_name     = "default"
+  subnet_prefixes = ["10.0.1.0/24"]
+}
