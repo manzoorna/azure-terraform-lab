@@ -32,3 +32,15 @@ module "network_security_group" {
   resource_group_name = module.resource_group.resource_group_name
   subnet_id           = module.virtual_network.subnet_id
 }
+
+module "linux_vm" {
+  source = "../modules/linux-vm"
+
+  vm_name             = "labvm01"
+  location            = "Central India"
+  resource_group_name = module.resource_group.resource_group_name
+  subnet_id           = module.virtual_network.subnet_id
+
+  admin_username = var.admin_username
+  admin_password = var.admin_password
+}

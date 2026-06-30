@@ -17,3 +17,11 @@ output "subnet_id" {
 output "nsg_name" {
   value = module.network_security_group.nsg_name
 }
+
+output "vm_name" {
+  value = module.linux_vm.vm_name
+}
+
+output "vm_public_ip" {
+  value = module.linux_vm.public_ip
+}
