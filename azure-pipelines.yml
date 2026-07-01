@@ -1,0 +1,26 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  workingDirectory: 'terraform'
+
+steps:
+- checkout: self
+
+- task: TerraformInstaller@1
+  inputs:
+    terraformVersion: 'latest'
+
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'Azure-ServiceConnection'
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      cd $(workingDirectory)
+      terraform init
+      terraform validate
+      terraform plan
