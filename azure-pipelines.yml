@@ -1,11 +1,13 @@
 trigger:
-- main
+  branches:
+    include:
+      - main
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: ubuntu-latest
 
 variables:
-  workingDirectory: 'terraform'
+  workingDirectory: terraform
 
 steps:
 - checkout: self
@@ -21,6 +23,9 @@ steps:
     scriptLocation: inlineScript
     inlineScript: |
       cd $(workingDirectory)
+
       terraform init
+
       terraform validate
-      terraform plan
+
+      terraform plan -lock-timeout=5m
