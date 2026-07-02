@@ -16,10 +16,12 @@ steps:
     terraformVersion: latest
 
 - task: AzureCLI@2
-  displayName: Verify Terraform Installation
+  displayName: Terraform Init
   inputs:
     azureSubscription: 'Azure-ServiceConnection'
     scriptType: bash
     scriptLocation: inlineScript
     inlineScript: |
-      terraform version
+      cd $(workingDirectory)
+
+      terraform init
