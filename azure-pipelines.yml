@@ -16,7 +16,7 @@ steps:
     terraformVersion: latest
 
 - task: AzureCLI@2
-  displayName: Terraform Init
+  displayName: Terraform Validate
   inputs:
     azureSubscription: 'Azure-ServiceConnection'
     scriptType: bash
@@ -25,3 +25,5 @@ steps:
       cd $(workingDirectory)
 
       terraform init
+
+      terraform validate
