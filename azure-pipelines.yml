@@ -2,21 +2,25 @@ trigger:
 - main
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'ubuntu-latest'
 
 variables:
-  workingDirectory: terraform
+  workingDirectory: 'terraform'
 
 steps:
+
+# Checkout source
 - checkout: self
 
+# Install Terraform
 - task: TerraformInstaller@1
-  displayName: Install Terraform
+  displayName: 'Install Terraform'
   inputs:
-    terraformVersion: latest
+    terraformVersion: 'latest'
 
+# Terraform Init
 - task: AzureCLI@2
-  displayName: Terraform Validate
+  displayName: 'Terraform Init'
   inputs:
     azureSubscription: 'Azure-ServiceConnection'
     scriptType: bash
@@ -24,8 +28,36 @@ steps:
     inlineScript: |
       cd $(workingDirectory)
 
+      rm -rf .terraform
+
       terraform init
+  env:
+    TF_VAR_admin_password: $(TF_VAR_admin_password)
+
+# Terraform Validate
+- task: AzureCLI@2
+  displayName: 'Terraform Validate'
+  inputs:
+    azureSubscription: 'Azure-ServiceConnection'
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      cd $(workingDirectory)
 
       terraform validate
-      
-      terraform plan -lock-timeout=5m
+  env:
+    TF_VAR_admin_password: $(TF_VAR_admin_password)
+
+# Terraform Plan
+- task: AzureCLI@2
+  displayName: 'Terraform Plan'
+  inputs:
+    azureSubscription: 'Azure-ServiceConnection'
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      cd $(workingDirectory)
+
+      terraform plan -lock-timeout=5m -input=false
+  env:
+    TF_VAR_admin_password: $(TF_VAR_admin_password)
