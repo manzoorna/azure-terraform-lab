@@ -27,3 +27,5 @@ steps:
       terraform init
 
       terraform validate
+      
+      terraform plan -lock-timeout=5m
