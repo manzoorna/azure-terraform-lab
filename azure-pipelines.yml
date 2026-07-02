@@ -4,14 +4,22 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+variables:
+  workingDirectory: terraform
+
 steps:
 - checkout: self
 
+- task: TerraformInstaller@1
+  displayName: Install Terraform
+  inputs:
+    terraformVersion: latest
+
 - task: AzureCLI@2
-  displayName: 'Test Azure Login'
+  displayName: Verify Terraform Installation
   inputs:
     azureSubscription: 'Azure-ServiceConnection'
     scriptType: bash
     scriptLocation: inlineScript
     inlineScript: |
-      az account show
+      terraform version
