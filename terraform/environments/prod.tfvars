@@ -5,6 +5,7 @@ vnet_name            = "prod-vnet"
 subnet_name          = "prod-subnet"
 nsg_name             = "prod-nsg"
 vm_name              = "prod-linux-vm"
+key_vault_name       = "kv-prod-manzoor-2026"
 
 address_space   = ["10.0.0.0/16"]
 subnet_prefixes = ["10.0.3.0/24"]

@@ -44,3 +44,12 @@ module "linux_vm" {
   admin_username = var.admin_username
   admin_password = var.admin_password
 }
+
+module "key_vault" {
+  source = "../modules/key-vault"
+
+  key_vault_name      = var.key_vault_name
+  location            = var.location
+  resource_group_name = module.resource_group.resource_group_name
+  tenant_id           = data.azurerm_client_config.current.tenant_id
+}

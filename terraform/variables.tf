@@ -54,3 +54,8 @@ variable "admin_password" {
   type        = string
   sensitive   = true
 }
+
+variable "key_vault_name" {
+  description = "Azure Key Vault name"
+  type        = string
+}
