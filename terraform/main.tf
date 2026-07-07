@@ -1,34 +1,34 @@
 module "resource_group" {
   source   = "../modules/resource-group"
-  name     = "terraform-lab-rg"
-  location = "Central India"
+  name     = var.resource_group_name
+  location = var.location
 }
 
 module "storage_account" {
   source = "../modules/storage-account"
 
-  storage_account_name = "tflabmanzoor001"
+  storage_account_name = var.storage_account_name
   resource_group_name  = module.resource_group.resource_group_name
-  location             = "Central India"
+  location             = var.location
 }
 
 module "virtual_network" {
   source = "../modules/virtual-network"
 
-  vnet_name           = "lab-vnet"
-  location            = "Central India"
+  vnet_name           = var.vnet_name
+  location            = var.location
   resource_group_name = module.resource_group.resource_group_name
 
-  address_space   = ["10.0.0.0/16"]
-  subnet_name     = "default"
-  subnet_prefixes = ["10.0.1.0/24"]
+  address_space   = var.address_space
+  subnet_name     = var.subnet_name
+  subnet_prefixes = var.subnet_prefixes
 }
 
 module "network_security_group" {
   source = "../modules/network-security-group"
 
-  nsg_name            = "lab-nsg"
-  location            = "Central India"
+  nsg_name            = var.nsg_name
+  location            = var.location
   resource_group_name = module.resource_group.resource_group_name
   subnet_id           = module.virtual_network.subnet_id
 }
@@ -36,8 +36,8 @@ module "network_security_group" {
 module "linux_vm" {
   source = "../modules/linux-vm"
 
-  vm_name             = "labvm01"
-  location            = "Central India"
+  vm_name             = var.vm_name
+  location            = var.location
   resource_group_name = module.resource_group.resource_group_name
   subnet_id           = module.virtual_network.subnet_id
 
