@@ -56,4 +56,4 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-      run: terraform plan -lock-timeout=5m -var-file=environments/dev.tfvars
+        run: terraform plan -lock-timeout=5m -var-file=environments/dev.tfvars
