@@ -42,7 +42,7 @@ module "linux_vm" {
   subnet_id           = module.virtual_network.subnet_id
 
   admin_username = var.admin_username
-  admin_password = var.admin_password
+  admin_password = data.azurerm_key_vault_secret.vm_password.value
 }
 
 module "key_vault" {

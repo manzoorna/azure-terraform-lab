@@ -49,11 +49,6 @@ variable "admin_username" {
   default     = "azureuser"
 }
 
-variable "admin_password" {
-  description = "VM administrator password"
-  type        = string
-  sensitive   = true
-}
 
 variable "key_vault_name" {
   description = "Azure Key Vault name"

@@ -25,3 +25,13 @@ output "vm_name" {
 output "vm_public_ip" {
   value = module.linux_vm.public_ip
 }
+
+output "key_vault_name" {
+  description = "Azure Key Vault Name"
+  value       = module.key_vault.key_vault_name
+}
+
+output "key_vault_id" {
+  description = "Azure Key Vault ID"
+  value       = module.key_vault.key_vault_id
+}
