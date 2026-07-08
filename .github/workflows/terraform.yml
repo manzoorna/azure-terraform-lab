@@ -7,7 +7,11 @@ on:
   pull_request:
     branches:
       - main
-
+      
+concurrency:
+  group: terraform-dev
+  cancel-in-progress: true
+  
 jobs:
   terraform:
     runs-on: ubuntu-latest
@@ -52,4 +56,4 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan -var-file=environments/dev.tfvars
+      run: terraform plan -lock-timeout=5m -var-file=environments/dev.tfvars
