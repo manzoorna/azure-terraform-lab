@@ -6,6 +6,8 @@ pool:
 
 variables:
   workingDirectory: 'terraform'
+  TF_IN_AUTOMATION: 'true'
+  TF_INPUT: 'false'
 
 steps:
 
@@ -30,8 +32,28 @@ steps:
 
       rm -rf .terraform
 
-      terraform init
+      terraform init \
+        -reconfigure \
+        -backend-config="backend-dev.hcl"
   env:
+    TF_IN_AUTOMATION: $(TF_IN_AUTOMATION)
+    TF_INPUT: $(TF_INPUT)
+    TF_VAR_admin_password: $(TF_VAR_admin_password)
+
+# Terraform Format Check
+- task: AzureCLI@2
+  displayName: 'Terraform Format Check'
+  inputs:
+    azureSubscription: 'Azure-ServiceConnection'
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      cd $(workingDirectory)
+
+      terraform fmt -check
+  env:
+    TF_IN_AUTOMATION: $(TF_IN_AUTOMATION)
+    TF_INPUT: $(TF_INPUT)
     TF_VAR_admin_password: $(TF_VAR_admin_password)
 
 # Terraform Validate
@@ -46,6 +68,8 @@ steps:
 
       terraform validate
   env:
+    TF_IN_AUTOMATION: $(TF_IN_AUTOMATION)
+    TF_INPUT: $(TF_INPUT)
     TF_VAR_admin_password: $(TF_VAR_admin_password)
 
 # Terraform Plan
@@ -58,6 +82,11 @@ steps:
     inlineScript: |
       cd $(workingDirectory)
 
-      terraform plan -lock-timeout=5m -input=false
+      terraform plan \
+        -lock-timeout=5m \
+        -input=false \
+        -var-file="./environments/dev.tfvars"
   env:
+    TF_IN_AUTOMATION: $(TF_IN_AUTOMATION)
+    TF_INPUT: $(TF_INPUT)
     TF_VAR_admin_password: $(TF_VAR_admin_password)
