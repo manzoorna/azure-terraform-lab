@@ -7,11 +7,7 @@ on:
   pull_request:
     branches:
       - main
-      
-concurrency:
-  group: terraform-dev
-  cancel-in-progress: true
-  
+
 jobs:
   terraform:
     runs-on: ubuntu-latest
@@ -50,10 +46,10 @@ jobs:
         run: terraform fmt -check
 
       - name: Terraform Init
-        run: terraform init
+        run: terraform init -reconfigure -backend-config="backend-dev.hcl"
 
       - name: Terraform Validate
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan -lock-timeout=5m -var-file=environments/dev.tfvars
+        run: terraform plan -var-file="./environments/dev.tfvars"
