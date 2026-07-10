@@ -53,3 +53,11 @@ module "key_vault" {
   resource_group_name = module.resource_group.resource_group_name
   tenant_id           = data.azurerm_client_config.current.tenant_id
 }
+
+module "container_registry" {
+  source = "../modules/container-registry"
+
+  acr_name            = var.acr_name
+  resource_group_name = module.resource_group.resource_group_name
+  location            = var.location
+}

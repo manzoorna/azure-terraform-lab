@@ -35,3 +35,15 @@ output "key_vault_id" {
   description = "Azure Key Vault ID"
   value       = module.key_vault.key_vault_id
 }
+
+output "acr_name" {
+  value = module.container_registry.acr_name
+}
+
+output "acr_login_server" {
+  value = module.container_registry.login_server
+}
+
+output "acr_id" {
+  value = module.container_registry.acr_id
+}

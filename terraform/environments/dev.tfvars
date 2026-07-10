@@ -6,6 +6,7 @@ subnet_name          = "dev-subnet"
 nsg_name             = "dev-nsg"
 vm_name              = "dev-linux-vm"
 key_vault_name       = "kv-dev-manzoor-2026"
+acr_name             = "acrmanzoordev2026"
 
 address_space   = ["10.0.0.0/16"]
 subnet_prefixes = ["10.0.1.0/24"]
